@@ -1,0 +1,55 @@
+outputFolder = fullfile(tempdir, 'caltech101'); % define output folder
+rootFolder = fullfile(outputFolder, '101_ObjectCategories');
+ imgSets = [ imageSet(fullfile(rootFolder, 'ball')), ...
+            imageSet(fullfile(rootFolder, 'test')) ];
+{ imgSets.Description }
+[imgSets.Count]        
+minSetCount = min([imgSets.Count]); 
+
+imgSets = partition(imgSets, minSetCount, 'randomize');
+[imgSets.Count]
+
+[trainingSets, validationSets] = partition(imgSets, 0.3, 'randomize');
+ball = read(trainingSets(1),1);
+test     = read(trainingSets(2),1);
+
+figure
+
+subplot(1,3,1);
+imshow(ball)
+subplot(1,3,2);
+imshow(test)
+
+bag = bagOfFeatures(trainingSets);
+img = read(imgSets(1), 1);
+featureVector = encode(bag, img);
+
+% Plot the histogram of visual word occurrences
+figure
+bar(featureVector)
+title('Visual word occurrences')
+xlabel('Visual word index')
+ylabel('Frequency of occurrence')
+
+categoryClassifier = trainImageCategoryClassifier(trainingSets, bag);
+
+confMatrix = evaluate(categoryClassifier, trainingSets);
+
+confMatrix = evaluate(categoryClassifier, validationSets);
+
+% Compute average accuracy
+mean(diag(confMatrix));
+
+
+ srcFiles = dir('C:\Users\junaid ahmad\AppData\Local\Temp\caltech101\101_ObjectCategories\testing\*.PNG');  % the folder in which ur images exists
+for i = 1 : length(srcFiles)
+    filename = strcat('C:\Users\junaid ahmad\AppData\Local\Temp\caltech101\101_ObjectCategories\testing\',srcFiles(i).name);
+    img = imread(filename);
+    [labelIdx, scores] = predict(categoryClassifier, img);
+
+categoryClassifier.Labels(labelIdx)
+if labelIdx==1
+ imwrite(img,['E:\required\' num2str(i) '.PNG'],'PNG');
+end
+end
+

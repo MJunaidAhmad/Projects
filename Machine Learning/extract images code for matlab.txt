@@ -1,0 +1,6 @@
+vid1=VideoReader('a.avi');//this is the name of your video first convert it to .avi format
+numFrames = vid1.NumberOfFrames;
+n=numFrames;
+for i = 1:1:n
+frames = read(vid1,i);imwrite(frames,['photo-' int2str(i), '.PNG']);
+end
