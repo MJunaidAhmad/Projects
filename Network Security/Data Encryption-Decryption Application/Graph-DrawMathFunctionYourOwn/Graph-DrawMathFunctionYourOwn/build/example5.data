@@ -1,0 +1,80 @@
+#
+# This file contains the definitions to build the graph of 
+# Example 5. For the debugging output uncomment the debug keyword.
+#
+#
+
+#debug
+
+g2dint {
+
+ grid { off }
+
+ zero { off }
+
+ bottom  0
+ right   45
+ left    2
+ top     25
+ background 0 200 200
+
+ title {
+        color 0 200 0
+#        font {
+#              style bold
+#              size  20
+#              name "Helvetica"
+#             }
+        name "Spectrum of a giant elliptical Galaxy in the Virgo cluster"
+       }
+
+ data {
+       url "elliptical.data"
+       color 255 255 0
+       name "data1"
+       background  0 0 0 
+      }
+
+ axis {
+       bottom
+       attach "data1"
+       title {
+              font {
+                    style italic
+                    name "TimesRoman"
+                    size 25
+                   }
+              name "Wavelength (angstroms)"
+              color 255 0 255
+             }
+        label {
+              font {
+                    style plain
+                    name "Helvetica"
+                    size 20
+                   }
+              }
+      }
+
+ axis {
+       left
+       attach "data1"
+       title {
+              font {
+                    style italic
+                    name "TimesRoman"
+                    size 25
+                   }
+              name "Flux"
+              color 255 0 255
+             }
+        label {
+              font {
+                    style plain
+                    name "Helvetica"
+                    size 20
+                   }
+              }
+      }
+
+}
