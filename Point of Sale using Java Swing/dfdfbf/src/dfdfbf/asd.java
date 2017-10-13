@@ -311,7 +311,7 @@ try
 {
 
 System.out.println("Trying to connect to database");
-conn=DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.110:1521:greens","has","hashserver");
+conn=DriverManager.getConnection("somedata");
 System.out.println("Connected");
 //return conn;
 }
